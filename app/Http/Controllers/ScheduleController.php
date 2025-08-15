@@ -20,6 +20,15 @@ class ScheduleController extends Controller
         return view('doctor.schedule.index', compact('appointments', 'upcoming'));
     }
 
+    public function appointments()
+    {
+        $doctorId = Auth::id();
+        $appointments = Appointment::where('doctor_id', $doctorId)->with('user')->get();
+        $upcoming = $this->getUpcomingAppointment($doctorId);
+
+        return view('doctor.schedule.appointment', compact('appointments', 'upcoming'));
+    }
+
     public function show($id)
     {
         $appointment = Appointment::with('user')->findOrFail($id);

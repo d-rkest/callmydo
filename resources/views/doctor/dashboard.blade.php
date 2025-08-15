@@ -26,7 +26,7 @@
                 <h3 class="text-md font-bold text-blue-800">New Appointments</h3>
                 <div class="flex">
                     <p class="text-4xl font-semibold mt-1 mr-4">{{ $newAppointments }}</p>
-                    <a href="{{ route('appointment.index') }}" class="mt-2 inline-block bg-blue-600 text-white px-2 py-1 rounded-full text-sm hover:bg-blue-700">View</a>
+                    <a href="{{ route('schedule.appointment') }}" class="mt-2 inline-block bg-blue-600 text-white px-2 py-1 rounded-full text-sm hover:bg-blue-700">View</a>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
 
     <!-- Main Content Grid -->
     <div class="md:ml-64 lg:ml-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Calendar Column (Left) -->
+        <!-- Appointment Column (Left) -->
         <div class="bg-white p-6 rounded-lg shadow">
             <h3 class="text-lg font-bold text-blue-800 mb-2 border-b-2 border-blue-300 pb-1">New Appointments</h3>
             <div class="mb-4">

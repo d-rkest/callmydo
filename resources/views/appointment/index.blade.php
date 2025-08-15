@@ -15,12 +15,12 @@
                 <span class="mx-2">/</span>
             </li>
             <li class="flex items-center">
-                <span class="text-gray-500">Appointments</span>
+                <span class="text-gray-500">Appointment</span>
             </li>
         </ol>
     </nav>
 
-    <h2 class="text-2xl md:ml-64 lg:ml-0 font-semibold mb-6">Appointments</h2>
+    <h2 class="text-2xl md:ml-64 lg:ml-0 font-semibold mb-6">Book Appointment</h2>
 
     <div class="md:ml-64 lg:ml-0 grid grid-cols-1 sm:grid-cols-3 gap-6">
         <!-- Upcoming Appointment Card (1 col) -->

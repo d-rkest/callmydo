@@ -73,16 +73,17 @@ Route::middleware(['auth', 'role:doctor'])->prefix('doctor')->name('doctor.')->g
 
 # Appointment Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
-    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
-    Route::get('/appointment/{id}', [AppointmentController::class, 'show'])->name('appointment.show');
+    Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index')->middleware('role:user');
+    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store')->middleware('role:user');
+    Route::get('/appointment/{id}', [AppointmentController::class, 'show'])->name('appointment.show')->middleware('role:user');
     Route::get('/appointment/video-call/{id}', [AppointmentController::class, 'videoCall'])->name('appointment.video-call');
-    Route::get('/appointment/review/{id}', [AppointmentController::class, 'review'])->name('appointment.review');
-    Route::post('/appointment/review/{id}', [AppointmentController::class, 'storeReview'])->name('appointment.review.store');
+    Route::get('/appointment/review/{id}', [AppointmentController::class, 'review'])->name('appointment.review')->middleware('role:user');
+    Route::post('/appointment/review/{id}', [AppointmentController::class, 'storeReview'])->name('appointment.review.store')->middleware('role:user');
     Route::post('/appointment/store-room-url', [AppointmentController::class, 'storeRoomUrl'])->name('appointment.store-room-url');
 
     Route::middleware(['role:doctor'])->group(function () {
         Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('/doctor/appointment', [ScheduleController::class, 'appointments'])->name('schedule.appointment');
         Route::get('/schedule/history', [ScheduleController::class, 'history'])->name('schedule.history');
         Route::get('/schedule/{id}', [ScheduleController::class, 'show'])->name('schedule.show');
         Route::post('/schedule/accept/{id}', [ScheduleController::class, 'accept'])->name('schedule.accept');

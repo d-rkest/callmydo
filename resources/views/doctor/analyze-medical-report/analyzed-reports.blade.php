@@ -67,7 +67,7 @@
                 <p><strong>Date Analyzed:</strong> <span id="modal-date"></span></p>
                 <p><strong>Findings:</strong> <span id="modal-findings"></span></p>
                 <p><strong>Diagnosis:</strong> <span id="modal-diagnosis"></span></p>
-                <p><strong>Doctor:</strong> <span id="modal-doctor"></span></p>
+                <p><strong>Doctor:</strong> <span id="modal-doctor">{{ Auth::user()->name }}</span></p>
                 <p><strong>Treatment Plan:</strong> <span id="modal-treatment-plan"></span></p>
                 <p><strong>Notes:</strong> <span id="modal-notes"></span></p>
                 <p><strong>Medications:</strong> <span id="modal-medications"></span></p>
@@ -93,7 +93,7 @@
                 document.getElementById('modal-date').textContent = report.updated_at ? new Date(report.updated_at).toLocaleDateString() : 'N/A';
                 document.getElementById('modal-findings').textContent = report.findings || 'N/A';
                 document.getElementById('modal-diagnosis').textContent = report.diagnosis || 'N/A';
-                document.getElementById('modal-doctor').textContent = report.doctor?.name || 'N/A';
+                // document.getElementById('modal-doctor').textContent = report.doctor?.name || 'N/A';
                 document.getElementById('modal-treatment-plan').textContent = report.treatment_plan || 'N/A';
                 document.getElementById('modal-notes').textContent = report.notes || 'N/A';
                 document.getElementById('modal-medications').textContent = report.medications ? report.medications.map(m => `${m.name} (${m.pivot.dosage})`).join(', ') : 'N/A';
