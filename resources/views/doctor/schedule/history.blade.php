@@ -44,7 +44,7 @@
                         <td class="p-2">{{ $appointment->appointment_time }} WAT</td>
                         <td class="p-2">{{ $appointment->user->name }}</td>
                         <td class="p-2">{{ $appointment->status }}</td>
-                        <td class="p-2"><a href="{{ route('appointment.show', $appointment->id) }}" class="text-blue-600 hover:text-blue-800">View Details</a></td>
+                        <td class="p-2"><a href="{{ route('schedule.show', $appointment->id) }}" class="text-blue-600 hover:text-blue-800">View Details</a></td>
                     </tr>
                 @endforeach
             </tbody>

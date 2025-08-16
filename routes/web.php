@@ -120,6 +120,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/settings/update-phone', [SettingsController::class, 'updatePhone'])->name('settings.update-phone');
     Route::delete('/settings/delete-account', [SettingsController::class, 'deleteAccount'])->name('settings.delete-account');
 });
+
+
    
 # Wallet Routes
 Route::get('/doctor/my-wallet', function () { return view('doctor.my-wallet');})->name('doctor.my-wallet');

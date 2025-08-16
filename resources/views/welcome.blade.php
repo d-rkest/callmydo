@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center relative pt-16 hero-background">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-12 card-stack bg-black bg-opacity-20 flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 justify-center items-center">
+            <div class="p-12 card-stack bg-black bg-opacity-20 flex flex-col lg:flex-row lg:space-x-4 md:space-x-2 space-y-4 lg:space-y-0 justify-center items-center">
                 <!-- Card: Analyze Medical Report -->
                 <a href="{{ route('analyze-medical-report') }}" class="border-b-4 border-yellow-600 bg-blue-900 rounded-xl shadow-lg p-6 text-center text-white z-10 hover:z-40 hover:scale-105 transition-all duration-300 w-full h-56 flex flex-col justify-center items-center">
                     <div class="w-12 h-12 mx-auto mb-4">
@@ -24,7 +24,7 @@
                     <p class="mt-2 text-white text-sm text-center">Purchase medications online.</p>
                 </a>
                 <!-- Card: Call a Doctor (First on sm) -->
-                <a href="{{ route('call-doctor') }}" class="border-b-4 border-yellow-600 bg-blue-800 rounded-xl shadow-lg p-6 text-center text-white z-30 hover:z-40 hover:scale-105 transition-all duration-300 w-full h-80 flex flex-col justify-center items-center order-first sm:order-none">
+                <a href="{{ route('call-doctor') }}" class="border-b-4 border-green-600 bg-blue-800 rounded-xl shadow-lg p-6 text-center text-white z-30 hover:z-40 hover:scale-105 transition-all duration-300 w-full h-80 flex flex-col justify-center items-center order-first sm:order-none">
                     <div class="w-12 h-12 mx-auto mb-4">
                         <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>

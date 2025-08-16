@@ -65,7 +65,7 @@
                 </div>
                 <!-- Menu/Dropdown -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="{{ route('store') }}" class="px-3 py-2 text-sm font-medium text-gray-300 hover:border-b-2 border-yellow-600 focus:outline-none focus:border-b-2" aria-label="Store">Store</a>
+                    <a href="{{ route('store') }}" class="px-3 py-2 text-sm font-medium text-gray-300 hover:border-b-2 border-yellow-600 focus:outline-none focus:border-b-2" aria-label="Store">Pharmacy</a>
                     <a href="{{ route('medical-report') }}" class="px-3 py-2 text-sm font-medium text-gray-300 hover:border-b-2 border-yellow-600 focus:outline-none focus:border-b-2" aria-label="Upload Report">Upload Report</a>
                     <a href="{{ route('give-first-aid') }}" class="px-3 py-2 text-sm font-medium text-gray-300 hover:border-b-2 border-yellow-600 focus:outline-none focus:border-b-2" aria-label="Give First Aid">Give First Aid</a>
                 </div>
@@ -78,13 +78,13 @@
                             </svg>
                         </button>
                         <div class="el-dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-50" id="menu-dropdown">
-                            <a href="{{ route('store') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Store">Store</a>
+                            <a href="{{ route('store') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Store">Pharmacy</a>
                             <a href="{{ route('medical-report') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Upload Report">Upload Report</a>
                             <a href="{{ route('give-first-aid') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Give First Aid">Give First Aid</a>
-                            @guest
+                            {{-- @guest
                                 <a href="{{ route('login') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Login">Login</a>
                                 <a href="{{ route('register') }}" class="block px-4 py-2 hover:bg-blue-100 focus:outline-none" aria-label="Signup">Signup</a>
-                            @endguest
+                            @endguest --}}
                         </div>
                     </div>
                 </div>

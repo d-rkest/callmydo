@@ -46,7 +46,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b">
+                    <tr>
+                        <td class="p-2 bg-gray-300 text-center py-8 text-gray-400 font-bold" colspan="5"> No Records</td>
+                    </tr>
+                    {{-- <tr class="border-b">
                         <td class="p-2">2025-08-07</td>
                         <td class="p-2">Funding</td>
                         <td class="p-2">Card Payment</td>
@@ -66,7 +69,7 @@
                         <td class="p-2">Bank Transfer</td>
                         <td class="p-2">2,000.00</td>
                         <td class="p-2">Processed</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>

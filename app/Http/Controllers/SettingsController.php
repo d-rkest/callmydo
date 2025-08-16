@@ -6,18 +6,16 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\DoctorDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\EmailVerificationCode;
-use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        return view('settings', compact('user'));
+        return view('settings');
     }
 
     public function updatePassword(Request $request)
@@ -25,54 +23,73 @@ class SettingsController extends Controller
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
+            'new_password_confirmation' => 'required', // Explicitly validate the confirmation field
         ]);
 
         $user = Auth::user();
+
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
 
-        $user->update(['password' => Hash::make($request->new_password)]);
-        return back()->with('success', 'Password updated successfully.');
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('status', 'Password updated successfully!');
     }
 
     public function verifyEmail(Request $request)
     {
-        $request->validate(['email_verification_code' => 'required']);
+        $request->validate(['email_verification_code' => 'required|numeric|digits:6']);
 
         $user = Auth::user();
-        // Assuming verification code is stored in session or a temporary table
-        $storedCode = session('email_verification_code'); // Placeholder; implement storage logic
-        if ($request->email_verification_code !== $storedCode) {
+        $storedCode = session('verification_code'); // Example: Assume code is stored in session after sending
+
+        if (!$storedCode || $request->email_verification_code != $storedCode) {
             return back()->withErrors(['email_verification_code' => 'Invalid verification code.']);
         }
 
-        $user->update(['email_verified_at' => now()]);
-        session()->forget('email_verification_code');
-        return back()->with('success', 'Email verified successfully.');
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+
+        return back()->with('status', 'Email verified successfully!');
     }
 
     public function resendVerification(Request $request)
     {
-        $user = Auth::user();
-        $code = Str::random(6); // Generate a 6-digit code
-        session(['email_verification_code' => $code]);
+        $request->validate(['email' => 'required|email']);
 
-        // Send email (implement Mail facade)
-        Mail::to($user->email)->send(new EmailVerificationCode($code));
-        return back()->with('success', 'Verification code has been resent.');
+        $user = Auth::user();
+        if ($user->hasVerifiedEmail()) {
+            return back()->with('status', 'Email already verified.');
+        }
+
+        $verificationCode = rand(100000, 999999);
+        session(['verification_code' => $verificationCode]);
+
+        // Replace with actual Mail facade usage
+        // Mail::to($user->email)->send(new VerificationCodeMail($verificationCode));
+
+        return back()->with('status', 'verification-link-sent');
     }
 
     public function updatePhone(Request $request)
     {
-        $request->validate(['phone' => 'required|regex:/^[+]?[0-9]{10,15}$/']);
+        $request->validate(['phone' => 'required|regex:/^[\+]?[0-9]{10,14}$/']);
 
         $user = Auth::user();
-        $userDetail = $user->userDetail() ?? new UserDetail(['user_id' => $user->id]);
-        $userDetail->phone = $request->phone;
-        $userDetail->save();
 
-        return back()->with('success', 'Phone number updated successfully.');
+        if ($user->role === 'doctor') {
+            $detail = $user->doctorDetail ?: new DoctorDetail(['user_id' => $user->id]);
+            $detail->phone = $request->phone;
+            $detail->save();
+        } else {
+            $detail = $user->userDetail ?: new UserDetail(['user_id' => $user->id]);
+            $detail->phone = $request->phone;
+            $detail->save();
+        }
+
+        return back()->with('status', 'Phone number updated successfully!');
     }
 
     public function deleteAccount(Request $request)
@@ -80,13 +97,9 @@ class SettingsController extends Controller
         $request->validate(['confirm_delete' => 'required|in:DELETE']);
 
         $user = Auth::user();
-        $user->userDetail()->delete();
-        if ($user->role === 'doctor') {
-            $user->doctorDetails()->delete();
-        }
         $user->delete();
 
         Auth::logout();
-        return redirect('/login')->with('success', 'Account deleted successfully.');
+        return redirect('/')->with('status', 'Account deleted successfully.');
     }
 }
