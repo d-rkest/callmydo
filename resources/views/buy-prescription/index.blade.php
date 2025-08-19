@@ -22,11 +22,46 @@
 
     <h2 class="text-2xl md:ml-64 lg:ml-0 font-semibold mb-6">Buy Prescription</h2>
 
-    <div class="md:ml-64 lg:ml-0 bg-white p-6 rounded-lg shadow text-center">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">Coming Soon</h3>
-        <p class="text-gray-600">This feature is under development and will be available soon. Stay tuned!</p>
-        <div class="mt-6">
-            <a href="{{ route('medical-report') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Back to Report Details</a>
+    <div class="md:ml-64 lg:ml-0">
+        <div class="max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Card Header/Title Section -->
+            <div class="bg-blue-600 text-white p-4">
+                <div class="flex justify-between text-sm">
+                    <p><span class="font-bold">From:</span> Dr. Claire Brown</p>
+                    <p class="font-bold">X-Ray Scan</p>
+                    <p>Date: {{ now()->format('F d, Y') }}</p>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6">
+                <h4 class="text-md font-semibold mb-4">Prescribed Medications</h4>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div class="flex-1">
+                            <p class="font-medium">Diclofenac</p>
+                            <p class="text-sm text-gray-600">500mg for 7 days, twice daily</p>
+                        </div>
+                        <p class="text-sm font-semibold ml-4">₦{{ '2400' }}</p>
+                    </div>
+                    <!-- Add more prescription rows here if needed -->
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="p-6 bg-gray-50 border-t">
+                <div class="flex items-center space-x-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="delivery_option" value="pickup" class="mr-2" checked>
+                        <span>Pickup (Free)</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="delivery_option" value="delivery" class="mr-2">
+                        <span>Delivery (+₦500)</span>
+                    </label>
+                    <a href="{{ route('checkout', 1) }}" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300">Place Order</a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

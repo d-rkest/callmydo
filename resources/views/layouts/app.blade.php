@@ -39,8 +39,8 @@
         <!-- Sidebar -->
         <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-blue-900 text-white transform" :class="{ '-translate-x-full': !isOpen }">
             <div class="flex items-center justify-between h-16 border-b border-blue-700 px-4">
-                <a href="{{ route('welcome') }}" class="text-xl font-bold">Call My Doctor</span>
-                <button id="close-sidebar" class="md:hidden text-white hover:text-gray-300">
+                <a href="{{ route('welcome') }}" class="text-xl font-bold">Call My Doctor</a>
+                <button id="close-sidebar" class="md:hidden text-white hover:text-gray-300 ">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -62,7 +62,7 @@
                 <div class="relative">
                     <button id="profile-btn" class="flex items-center space-x-2 focus:outline-none bg-white hover:bg-blue-100 rounded-full p-0.5 pr-5">
                         <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->profile_photo_path ? Storage::url(auth()->user()->profile_photo_path) : asset('images/profile.jpg') }}" alt="Profile">
-                        <span class="text-sm text-gray-500 font-bold">{{ auth()->user()->name }}</span>
+                        <span class="text-sm text-gray-500 font-bold">{{ Auth::user()->name }}</span>
                         <i class="fa fa-caret-down text-gray-600 font-bold"></i>
                     </button>
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-50">

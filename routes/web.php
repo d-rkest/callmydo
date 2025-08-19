@@ -26,19 +26,19 @@ Route::any('/logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-// ----------------------- Home Page Routes ------------------------ //
-Route::get('/call-ambulance', function () { return view('call-ambulance'); })->name('call-ambulance');
-Route::get('/locate-medical-center', function () { return view('locate-medical-center');})->name('locate-medical-center');
-Route::get('/give-first-aid', [FirstAidController::class, 'index'])->name('give-first-aid');
-Route::get('/first-aid/fetch', [FirstAidController::class, 'fetch'])->name('first-aid.fetch');
-Route::get('/store', function () {  return view('store');})->name('store');
-
 # Authentication and Authorization Dashboard Middleware
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [Dashboard::class, 'userDashboard'])->name('dashboard');
     Route::get('/admin/dashboard', [Dashboard::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/doctor/dashboard', [Dashboard::class, 'doctorDashboard'])->name('doctor.dashboard');
 });
+
+// ----------------------- Home Page Routes ------------------------ //
+Route::get('/call-ambulance', function () { return view('call-ambulance'); })->name('call-ambulance');
+Route::get('/locate-medical-center', function () { return view('locate-medical-center');})->name('locate-medical-center');
+Route::get('/give-first-aid', [FirstAidController::class, 'index'])->name('give-first-aid');
+Route::get('/first-aid/fetch', [FirstAidController::class, 'fetch'])->name('first-aid.fetch');
+Route::get('/Pharmacy', function () {  return view('pharmacy');})->name('store');
 
 // ------------------- Users Dashboard routes ------------------- //
 # User Profile Routes
@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     
     # Other Routes to be included
     Route::get('/buy-prescription/{id}', function ($id) { return view('buy-prescription.index'); })->name('buy-prescription');
+    Route::get('/checkout/{id}', function ($id) { return view('buy-prescription.checkout'); })->name('checkout');
     Route::get('/my-order/{id}', function ($id) { return view('buy-prescription.index');})->name('my-order');
 });
 
@@ -81,7 +82,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/appointment/review/{id}', [AppointmentController::class, 'storeReview'])->name('appointment.review.store')->middleware('role:user');
     Route::post('/appointment/store-room-url', [AppointmentController::class, 'storeRoomUrl'])->name('appointment.store-room-url');
 
+    # Medica Report
+    Route::middleware(['role:user'])->group(function () {
+        Route::get('/medical-report', [MedicalReportController::class, 'index'])->name('medical-report');
+        Route::post('/medical-report', [MedicalReportController::class, 'store'])->name('medical-report.store');
+        Route::get('/medical-report/analyzed/{id}', [MedicalReportController::class, 'show'])->name('medical-report.show');
+        Route::get('/medical-history', [MedicalHistoryController::class, 'index'])->name('medical-history');
+    });
+
     Route::middleware(['role:doctor'])->group(function () {
+        # Doctor Schedule Routes
         Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
         Route::get('/doctor/appointment', [ScheduleController::class, 'appointments'])->name('schedule.appointment');
         Route::get('/schedule/history', [ScheduleController::class, 'history'])->name('schedule.history');
@@ -95,15 +105,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/analyze-medical-report/{id}', [AnalyzeMedicalReportController::class, 'show'])->name('analyze-medical-report.show');
         Route::post('/analyze-medical-report/{id}/feedback', [AnalyzeMedicalReportController::class, 'storeFeedback'])->name('medical-report.feedback.store');
         Route::get('/analyzed-reports', [AnalyzeMedicalReportController::class, 'analyzedReports'])->name('analyzed-reports');
-    });
-    
-    # Medica Report
-    Route::middleware(['role:user'])->group(function () {
-        Route::get('/medical-report', [MedicalReportController::class, 'index'])->name('medical-report');
-        Route::post('/medical-report', [MedicalReportController::class, 'store'])->name('medical-report.store');
-        Route::get('/medical-report/{id}', [MedicalReportController::class, 'show'])->name('medical-report.show');
-        Route::get('/medical-history', [MedicalHistoryController::class, 'index'])->name('medical-history');
-    });
+    });    
     
     # Call routes
     Route::post('/call/initiate', [CallController::class, 'initiateCall'])->name('call.initiate');
@@ -119,16 +121,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/settings/resend-verification', [SettingsController::class, 'resendVerification'])->name('settings.resend-verification');
     Route::post('/settings/update-phone', [SettingsController::class, 'updatePhone'])->name('settings.update-phone');
     Route::delete('/settings/delete-account', [SettingsController::class, 'deleteAccount'])->name('settings.delete-account');
+    
+    # Wallet Routes
+    Route::get('/doctor/my-wallet', function () { return view('doctor.my-wallet');})->name('doctor.my-wallet');
+    Route::get('/doctor/fund-wallet', function () { return view('doctor.fund-wallet');})->name('doctor.fund-wallet');
+    Route::post('/doctor/process-payment', function() {
+        return redirect()->back(); // Placeholder for payment processing
+    })->name('doctor.process-payment');
 });
-
-
-   
-# Wallet Routes
-Route::get('/doctor/my-wallet', function () { return view('doctor.my-wallet');})->name('doctor.my-wallet');
-Route::get('/doctor/fund-wallet', function () { return view('doctor.fund-wallet');})->name('doctor.fund-wallet');
-Route::post('/doctor/process-payment', function() {
-    return redirect()->back(); // Placeholder for payment processing
-})->name('doctor.process-payment');
+  
 
 // ------------ Admin dashboard routes ------------------ //
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -144,22 +145,24 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::put('/users/{id}', [UserController::class, 'update'])->name('update-user');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('destroy-user');
 });
+//  ------------------------------------------------------------------------------------------------
+    #App Settings ----------------------------------------------------------------------------------
+//  ------------------------------------------------------------------------------------------------
+    Route::get('/admin/app-settings', function () { return view('admin.app-settings'); })->name('admin.app-settings');
+    Route::put('/admin/update-settings', function (Request $request) {
+        // Validate and update settings here
+        return redirect()->route('admin.app-settings')->with('success', 'Settings updated successfully');
+    })->name('admin.update-settings');
+    # Analytics and Logs
+    Route::get('/admin/analytics', function () { return view('admin.analytics'); })->name('admin.analytics');
+    Route::get('/admin/logs', function () { return view('admin.logs'); })->name('admin.logs');
+    Route::get('/admin/support-center', function () { return view('admin.support-center'); })->name('admin.support-center');
+    Route::get('/admin/view-ticket/{id}', function ($id) {
+        // Fetch ticket data here in a real app
+        return view('admin.view-ticket', ['ticket' => (object) ['id' => $id]]);
+    })->name('admin.view-ticket');
+    
+    Route::get('/support-center', function () { return view('admin.dashboard');})->name('support-center');
 
-#App Settings
-Route::get('/admin/app-settings', function () {    return view('admin.app-settings'); })->name('admin.app-settings');
-Route::put('/admin/update-settings', function (Request $request) {
-    // Validate and update settings here
-    return redirect()->route('admin.app-settings')->with('success', 'Settings updated successfully');
-})->name('admin.update-settings');
-# Analytics and Logs
-Route::get('/admin/analytics', function () { return view('admin.analytics'); })->name('admin.analytics');
-Route::get('/admin/logs', function () { return view('admin.logs'); })->name('admin.logs');
-Route::get('/admin/support-center', function () { return view('admin.support-center'); })->name('admin.support-center');
-Route::get('/admin/view-ticket/{id}', function ($id) {
-    // Fetch ticket data here in a real app
-    return view('admin.view-ticket', ['ticket' => (object) ['id' => $id]]);
-})->name('admin.view-ticket');
-
-Route::get('/support-center', function () { return view('admin.dashboard');})->name('support-center');
 
 require __DIR__.'/auth.php';

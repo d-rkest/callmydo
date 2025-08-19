@@ -74,7 +74,7 @@ class AnalyzeMedicalReportController extends Controller
             DB::table('report_medications')->insert($medicationData);
         }
 
-        return redirect()->route('doctor.analyze-medical-report')->with('success', 'Feedback submitted successfully.');
+        return redirect()->route('analyze-medical-report')->with('success', 'Feedback submitted successfully.');
     }
 
     public function analyzedReports()

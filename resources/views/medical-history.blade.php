@@ -86,10 +86,10 @@
                                         <span class="bg-red-100 text-sm p-1 px-3 rounded-full text-red-800">expired</span>
                                         @break
                                     @case('scheduled')
-                                        <span class="bg-yellow-100 text-sm p-1 px-3 rounded-full text-yellow-800">scheduled</span>
+                                        <span class="bg-yellow-100 text-sm p-1 px-3 rounded-full text-yellow-800">pending approval</span>
                                         @break
                                     @default
-                                        <span class="bg-green-100 text-sm p-1 px-3 rounded-full text-green-800">successfull</span>
+                                        <span class="bg-green-100 text-sm p-1 px-3 rounded-full text-green-800">successful</span>
                                 @endswitch
                             </td>
                             <td class="p-2">{{ $appointment['reason'] }}</td>

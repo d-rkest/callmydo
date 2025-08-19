@@ -8,7 +8,11 @@
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
             <div class="p-12 card-stack bg-black bg-opacity-20 flex flex-col lg:flex-row lg:space-x-4 md:space-x-2 space-y-4 lg:space-y-0 justify-center items-center">
                 <!-- Card: Analyze Medical Report -->
-                <a href="{{ route('analyze-medical-report') }}" class="border-b-4 border-yellow-600 bg-blue-900 rounded-xl shadow-lg p-6 text-center text-white z-10 hover:z-40 hover:scale-105 transition-all duration-300 w-full h-56 flex flex-col justify-center items-center">
+                <a href="@if (Auth::user() === 'doctor')
+                    {{ route('analyze-medical-report') }}                    
+                @else
+                    {{ route('medical-report') }}
+                @endif" class="border-b-4 border-yellow-600 bg-blue-900 rounded-xl shadow-lg p-6 text-center text-white z-10 hover:z-40 hover:scale-105 transition-all duration-300 w-full h-56 flex flex-col justify-center items-center">
                     <div class="w-12 h-12 mx-auto mb-4">
                         <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
                     </div>

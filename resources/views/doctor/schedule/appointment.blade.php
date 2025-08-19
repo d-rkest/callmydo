@@ -51,13 +51,13 @@
                             <td class="p-2">
                                 @switch($appointment->status)
                                     @case('pending')
-                                        <span class="text-yellow-600">Pending</span>
+                                        <span class="text-yellow-600 font-bold bg-yellow-400 rounded-full px-3 py-1 text-sm">Pending</span>
                                         @break
                                     @case('scheduled')
-                                        <span class="text-blue-600 bg-red-400 rounded-full p-3">joined</span>                                           
+                                        <span class="text-green-600 font-bold rounded-full px-3 py-1 text-sm">Joined</span>                                           
                                         @break
                                     @default
-                                        <span class="text-gray-600">Completed</span>
+                                        <span class="text-gray-600 font-bold bg-gray-400 rounded-full px-3 py-1 text-sm">Completed</span>
                                 @endswitch
                             </td>
                             <td class="p-2"><a href="{{ route('schedule.show', $appointment->id) }}" class="text-blue-600 hover:text-blue-800">View</a></td>

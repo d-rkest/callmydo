@@ -29,17 +29,18 @@
                 <h3 class="text-lg font-bold text-blue-800 mb-2 border-b-2 border-blue-300 pb-1">Profile Photo</h3>
                 <div class="flex flex-col items-center">
                     <img src="{{ Auth::user()->profile_photo_path ? Storage::url(auth()->user()->profile_photo_path) : url('images/profile.jpg') }}" alt="Profile Photo" class="w-32 h-32 rounded-full object-cover mb-2 border-4 border-blue-200">
-                    <p class="text-sm text-gray-600">{{ auth()->user()->email ?? 'N/A' }}</p>
+                    <h3 class="m-1 font-bold text-gray-600">{{ Auth::user()->name }}</h3>
+                    <p class="text-sm text-gray-600 mb-1">{{ auth()->user()->email ?? 'N/A' }}</p>
                     <form action="{{ route('doctor.profile.update.photo') }}" method="POST" enctype="multipart/form-data" class="text-center mt-2">
                         @csrf
                         <input type="file" name="profile_photo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700">
-                        <button type="submit" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700">Upload</button>
+                        <button type="submit" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700">Change Photo</button>
                     </form>
                 </div>
                 
                 <h3 class="mt-5 text-lg font-bold text-blue-800 mb-2 border-b-2 border-blue-300 pb-1">Personal Details</h3>
                 <div class="flex flex-col">
-                    <p><strong>Name:</strong> {{ auth()->user()->name ?? 'N/A' }}</p>
+                    {{-- <p><strong>Name:</strong> {{ auth()->user()->name ?? 'N/A' }}</p> --}}
                     <p><strong>Phone:</strong> {{ auth()->user()->userDetail->phone ?? 'N/A' }}</p>
                     <p><strong>Gender:</strong> {{ auth()->user()->userDetail->gender ?? 'N/A' }}</p>
                     <p><strong>Address:</strong> {{ auth()->user()->userDetail->address ?? 'N/A' }}</p>

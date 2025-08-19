@@ -52,7 +52,7 @@
     <!-- Feedback Form -->
     <div class="md:ml-64 lg:ml-0 bg-white p-6 rounded-lg shadow mt-6">
         <h3 class="text-lg font-bold text-green-800 mb-2 border-b-2 border-green-300 pb-1">Provide Feedback</h3>
-        <form action="{{ route('doctor.medical-report.feedback.store', $report->id) }}" method="POST" id="feedback-form" class="space-y-4">
+        <form action="{{ route('medical-report.feedback.store', $report->id) }}" method="POST" id="feedback-form" class="space-y-4">
             @csrf
             <input type="hidden" name="report_id" value="{{ $report->id }}">
             <div>

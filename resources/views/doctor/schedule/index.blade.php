@@ -74,6 +74,12 @@
         const calendar = document.getElementById('custom-calendar');
         const appointments = @json($appointments);
 
+        // Pre-generate route URLs in PHP
+        const appointmentRoutes = {};
+        appointments.forEach(app => {
+            appointmentRoutes[app.id] = `{{ route('schedule.show', ':id') }}`.replace(':id', app.id);
+        });
+
         // Generate calendar for the current month
         const currentDate = new Date();
         const year = currentDate.getFullYear();
@@ -101,7 +107,7 @@
                     if (dayAppointments.length > 0) {
                         content += '<ul class="text-sm text-blue-800">';
                         dayAppointments.forEach(app => {
-                            content += `<li><a href="{{ route('schedule.show', ':id') }}".replace(':id', ${app.id}) class="text-blue-600 hover:text-blue-800">${app.appointment_time}</a></li>`;
+                            content += `<li><a href="${appointmentRoutes[app.id]}" class="text-blue-600 hover:text-blue-800">${app.appointment_time}</a></li>`;
                         });
                         content += '</ul>';
                     }
