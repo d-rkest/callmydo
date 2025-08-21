@@ -14,7 +14,9 @@ class AppointmentController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $appointments = Appointment::where('user_id', $userId)->with('doctor')->get();
+        $appointments = Appointment::where('user_id', $userId)
+        ->orderBy('created_at', 'desc')
+        ->with('doctor')->get();
         $upcoming = $this->getUpcomingAppointment($userId);
 
         return view('appointment.index', compact('appointments', 'upcoming'));

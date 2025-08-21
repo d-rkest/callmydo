@@ -33,7 +33,21 @@
             <p><strong>Time:</strong> {{ $appointment->appointment_time }} WAT</p>
             <p><strong>Doctor:</strong> {{ $appointment->doctor->name ?? 'Not assigned yet' }}</p>
             <p><strong>Specialization:</strong> {{ $appointment->doctor->specialization ?? 'N/A' }}</p>
-            <p><strong>Status:</strong> {{ $appointment->status }}</p>
+            <p><strong>Status:</strong>                               
+                @switch($appointment['status'])
+                    @case('expired')
+                        <span class="bg-red-300 text-sm font-bold p-1 px-3 rounded-full text-red-900">expired</span>
+                        @break
+                    @case('scheduled')
+                        <span class="bg-yellow-200 text-sm font-bold p-1 px-3 rounded-full text-yellow-800">approved</span>
+                        @break
+                    @case('successful')
+                        <span class="bg-green-200 text-sm font-bold p-1 px-3 rounded-full text-green-800">successful</span>
+                        @break
+                    @default
+                        <span class="bg-gray-200 text-sm font-bold p-1 px-3 rounded-full text-gray-800">pending approval</span>
+                @endswitch
+            </p>
             <p><strong>Reason:</strong> {{ $appointment->reason ?? 'N/A' }}</p>
         </div>
     </div>

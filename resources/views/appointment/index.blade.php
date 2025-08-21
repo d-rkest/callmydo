@@ -64,7 +64,21 @@
                                 <td class="p-2">{{ $appointment->appointment_date }}</td>
                                 <td class="p-2">{{ $appointment->appointment_time }} WAT</td>
                                 <td class="p-2">{{ $appointment->status === 'pending' ? '-' : ($appointment->doctor->name ?? '-') }}</td>
-                                <td class="p-2">{{ $appointment->status }}</td>
+                                <td class="p-2">                               
+                                    @switch($appointment['status'])
+                                        @case('expired')
+                                            <span class="text-sm font-bold p-1 px-3">expired</span>
+                                            @break
+                                        @case('scheduled')
+                                            <span class="text-sm font-bold p-1 px-3">approved</span>
+                                            @break
+                                        @case('successful')
+                                            <span class="text-sm font-bold p-1 px-3">successful</span>
+                                            @break
+                                        @default
+                                            <span class="text-sm font-bold p-1 px-3">pending approval</span>
+                                    @endswitch
+                                </td>
                                 <td class="p-2">
                                     @if ($appointment->status !== 'pending')
                                         <a href="{{ route('appointment.show', $appointment->id) }}" class="text-blue-600 hover:text-blue-800">View Details</a>

@@ -62,6 +62,7 @@ class Dashboard extends Controller
     {
         $userId = Auth::id();
         $appointments = Appointment::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
             ->where('appointment_date', '>=', now()->toDateString())
             // ->where('status', 'expired')
             ->with('user')
